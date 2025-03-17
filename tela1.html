@@ -48,7 +48,6 @@
         </div>
     </div>
 
-    <!-- Modal de Alerta -->
     <div id="modal-alerta" class="modal">
         <div class="modal-conteudo">
             <span class="fechar" onclick="fecharModal()">&times;</span>
@@ -103,7 +102,6 @@
 
             document.getElementById("total").textContent = total.toFixed(2);
 
-            // Só exibir os alertas se estivermos adicionando uma despesa (adicionando = true)
             if (salario > 0 && adicionando) {
                 if (total >= salario * 0.5 && total < salario) exibirModal("Atenção! Você gastou metade do seu salário.");
                 if (total >= salario) exibirModal("Atenção! Você gastou todo o seu salário.");
@@ -114,7 +112,7 @@
 
         function removerDespesa(index) {
             despesas.splice(index, 1);  
-            atualizarTabela(false);  // Passa false para indicar que não deve exibir alerta
+            atualizarTabela(false); 
         }
 
         function exibirModal(mensagem) {
