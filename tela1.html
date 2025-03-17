@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Gastos</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <header class="nav-tela1">
+        <h1>MoneyTrack</h1>
+        <div class="nav-info">
+            <p>Início</p>
+            <p>Relatório</p>
+            <p>Configurações</p>
+        </div>
+    </header>
+    <div class="container-tela1">
+        <div class="left-content">
+            <div class="informacao">
+                <h2 class="entrada-adicionar">Entrada de Salário</h2>
+                <label>Salário: R$ <input type="number" id="salario" placeholder="Digite seu salário"></label>
+                <label>Renda extra: R$ <input type="number" id="extra" placeholder="Digite sua renda extra"></label>
+            </div>
+            <div class="informacao">
+                <h2 class="entrada-adicionar">Adicionar Despesa</h2>
+                <label>Despesa: <input type="text" id="descricao" placeholder="Descrição"></label>
+                <label>Valor: R$ <input type="number" id="valor" placeholder="Valor"></label>
+                <label>Data: <input type="date" id="data"></label>
+                <button id="adicionar-btn">Adicionar</button>
+            </div>     
+            <table class="informacao">
+                <thead>
+                    <tr>
+                        <th>Descrição</th>
+                        <th>Valor (R$)</th>
+                        <th>Data</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody id="tabela-despesas"></tbody>
+            </table>
+        </div>
+        <div class="container-grafico">
+            <h3>Total de Gastos: R$ <span id="total">0</span></h3>
+            <canvas id="grafico" width="500" height="500"></canvas>
+        </div>
+    </div>
+
+    <!-- Modal de Alerta -->
+    <div id="modal-alerta" class="modal">
+        <div class="modal-conteudo">
+            <span class="fechar" onclick="fecharModal()">&times;</span>
+            <p id="mensagem-alerta"></p>
+        </div>
+    </div>
+    
+    <script>
+        let despesas = [];
+        let salario = 0;
+        
+        function formatarData(data) {
+            const dataObj = new Date(data + 'T00:00:00');  
+            const dia = String(dataObj.getDate()).padStart(2, '0');  
+            const mes = String(dataObj.getMonth() + 1).padStart(2, '0');  
+            const ano = dataObj.getFullYear(); 
+            return `${dia}/${mes}/${ano}`;  
+        }
+
+        function atualizarSalarioTotal() {
+            salario = (parseFloat(document.getElementById("salario").value) || 0) + (parseFloat(document.getElementById("extra").value) || 0);
+        }
+
+        function adicionarDespesa() {
+            const descricao = document.getElementById("descricao").value;
+            const valor = parseFloat(document.getElementById("valor").value);
+            const data = document.getElementById("data").value;
+
+            if (!descricao || isNaN(valor) || valor <= 0 || !data) {
+                exibirModal("Preencha todos os campos corretamente!");
+                return;
+            }
+
+            despesas.push({ descricao, valor, data: formatarData(data) });  
+            atualizarTabela();
+        }
+
+        function atualizarTabela(adicionando = true) {
+            const tbody = document.getElementById("tabela-despesas");
+            tbody.innerHTML = "";
+            let total = 0;
+
+            despesas.forEach((d, index) => {
+                total += d.valor;
+                tbody.innerHTML += `<tr>
+                    <td>${d.descricao}</td>
+                    <td>R$ ${d.valor.toFixed(2)}</td>
+                    <td>${d.data}</td>
+                    <td><button onclick="removerDespesa(${index})">Remover</button></td>
+                </tr>`;
+            });
+
+            document.getElementById("total").textContent = total.toFixed(2);
+
+            // Só exibir os alertas se estivermos adicionando uma despesa (adicionando = true)
+            if (salario > 0 && adicionando) {
+                if (total >= salario * 0.5 && total < salario) exibirModal("Atenção! Você gastou metade do seu salário.");
+                if (total >= salario) exibirModal("Atenção! Você gastou todo o seu salário.");
+            }
+
+            atualizarGrafico();
+        }
+
+        function removerDespesa(index) {
+            despesas.splice(index, 1);  
+            atualizarTabela(false);  // Passa false para indicar que não deve exibir alerta
+        }
+
+        function exibirModal(mensagem) {
+            document.getElementById("mensagem-alerta").textContent = mensagem;
+            document.getElementById("modal-alerta").style.display = "block";
+        }
+
+        function fecharModal() {
+            document.getElementById("modal-alerta").style.display = "none";
+        }
+
+        document.getElementById("salario").addEventListener("input", atualizarSalarioTotal);
+        document.getElementById("extra").addEventListener("input", atualizarSalarioTotal);
+
+        let ctx = document.getElementById("grafico").getContext("2d");
+        let grafico = new Chart(ctx, {
+            type: 'pie',
+            data: { labels: [], datasets: [{ data: [], backgroundColor: ['red', 'blue', 'green', 'purple', 'orange'] }] },
+        });
+
+        function atualizarGrafico() {
+            grafico.data.labels = despesas.map(d => d.descricao);
+            grafico.data.datasets[0].data = despesas.map(d => d.valor);
+            grafico.update();
+        }
+
+        document.getElementById("adicionar-btn").addEventListener("click", adicionarDespesa);
+    </script>
+
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-conteudo {
+            background-color: #798252;
+            margin: 15% auto;
+            border-radius: 10px;
+            padding: 20px;
+            width: 500px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        } 
+        .fechar {
+            float: right;
+            cursor: pointer;
+        }
+    </style>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+    <main class="container">
+        <form action="/submit" method="post">
+            <h1>MoneyTrack</h1>
+            <h2 class="subtitulo">Cadastro</h2>
+            <div class="input-box">
+                <input placeholder="Nome e sobrenome" name="nome" type="nome" required>
+            </div>
+            <div class="input-box">
+                <input placeholder="Email" type="email" name="email" required>
+            </div>
+            <div class="input-box">
+                <input placeholder="Senha" type="password" name="senha" required>
+            </div>
+            <div class="input-box">
+                <input placeholder="Confirmar a senha" type="password" name="confirmarSenha" required>
+            </div>
+            <div>
+                <button type="submit" class="login">Cadastrar</button>
+            </div>
+            <div class="register-link">
+                <p>Já tem uma conta? <a href="Index.html">Entre</a></p>
+            </div>
+</body>
+</html>
