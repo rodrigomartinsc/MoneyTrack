@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="style2.css">
+    <style>
+        .logo a, .buttonnav a {
+            text-decoration: none;
+        }
+
+        
+        .imagem {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px; 
+            padding: 5px; 
+            border-radius: 10px;
+            margin: 60px auto 10px; 
+            max-width: 1200px;
+            text-align: left;
+            padding-left: 0px;
+        }
+
+        .imagem section {
+            width: 50%;
+        }
+
+        .imagem img {
+            width: 50%;
+            max-width: 700px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+    
+        @media (max-width: 768px) {
+            .imagem {
+                flex-direction: column;
+                text-align: center;
+                margin-top: 40px;
+            }
+
+            .imagem section,
+            .imagem img {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navdiv">
+            <div class="logo"><a href="#">MoneyTrack</a></div>
+            <ul>
+               <button class="buttonnav"><a href="Index.html" target="_blank">Entrar</a></button>
+               <button class="buttonnav"><a href="cadastro.html" target="_blank">Cadastrar</a></button>
+            </ul>
+        </div>
+    </nav>
+    
+    <main class="imagem">
+        <section>
+            <h4>Problemas para gerenciar corretamente o seu dinheiro?</h4>
+            <p>Controle seus gastos e alcance seus objetivos financeiros.
+                Gerenciar suas finanças nunca foi tão fácil! Com o MoneyTrack, você tem um controle completo sobre seus ganhos e despesas, organizando suas contas de forma simples e eficiente.</p>
+            <p>Acompanhe suas finanças em tempo real.
+                Veja para onde seu dinheiro está indo, identifique oportunidades de economia e tome decisões mais inteligentes para o seu futuro financeiro.</p> 
+            <p>Organize seu orçamento e planeje seu futuro!
+                Crie categorias personalizadas e tenha uma visão clara das suas finanças para evitar surpresas no final do mês.</p>
+            <p>Acesse de qualquer lugar, a qualquer hora.
+                Nosso gerenciador financeiro é 100% online e gratuito! Cadastre-se agora e comece a transformar sua relação com o dinheiro.</p>
+            <h4>Cadastre-se gratuitamente e comece agora mesmo!</h4>
+        </section>
+        <img src="images/moneytrack.png" alt="">
+    </main>
+    
+    <footer>
+        <p class="p-footer">&copy;MoneyTrack. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

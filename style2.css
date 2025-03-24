@@ -18,6 +18,19 @@
     left: 0;
     width: 100%;
     z-index: 1000;
+    font-size: 20px;
+}
+li{
+    list-style: none;
+    display: inline-block;
+}
+
+li a {
+    font-size: 18px;
+    color: #798252;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px;
 }
 
 .nav-info {
@@ -132,4 +145,72 @@ h3 {
 }
 .entrada-adicionar{
     text-align: center;
+}
+
+
+
+.navbar {
+    background-color: #331f19;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding: 15px 15px;
+  
+}
+.navdiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo a{
+    color: #798252;
+
+}
+.logo {
+    font-size: 35px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.buttonnav a{
+    color: #331f19;
+}
+
+.buttonnav {
+    background-color: #798252;
+    margin-left: 10px;
+    border-radius: 10px;
+    padding: 10px;
+    width: 100px;
+    margin: 10px 10px;
+    text-decoration: none;
+}
+
+section h4 {
+    font-size: 30px;
+    color: #798252;
+    margin-top: 10px;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    color: #331f19;
+    text-align: left;
+    width: 50%;
+    margin-left: 0;
+    padding: 6px;
+    font-size: 18px;
+
+}
+
+footer{
+    background-color: #331f19;
+    padding: 2rem;
+    text-align: center;
+
+
+}
+.p-footer {
+    color: #f4f0fa;
 }

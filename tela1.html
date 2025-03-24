@@ -8,14 +8,15 @@
     <link rel="stylesheet" href="style2.css">
 </head>
 <body>
-    <header class="nav-tela1">
+    <nav class="nav-tela1">
         <h1>MoneyTrack</h1>
         <div class="nav-info">
-            <p>Início</p>
-            <p>Relatório</p>
-            <p>Configurações</p>
+           <ul>
+            <li><a href="tela1.html">Relatório</a></li>
+            <li><a href="Inicio.html">Sair</a></li>
+           </ul>    
         </div>
-    </header>
+    </nav>
     <div class="container-tela1">
         <div class="left-content">
             <div class="informacao">
@@ -48,7 +49,7 @@
         </div>
     </div>
 
-    <!-- Modal de Alerta -->
+  
     <div id="modal-alerta" class="modal">
         <div class="modal-conteudo">
             <span class="fechar" onclick="fecharModal()">&times;</span>
@@ -103,7 +104,7 @@
 
             document.getElementById("total").textContent = total.toFixed(2);
 
-            // Só exibir os alertas se estivermos adicionando uma despesa (adicionando = true)
+           
             if (salario > 0 && adicionando) {
                 if (total >= salario * 0.5 && total < salario) exibirModal("Atenção! Você gastou metade do seu salário.");
                 if (total >= salario) exibirModal("Atenção! Você gastou todo o seu salário.");
@@ -114,7 +115,7 @@
 
         function removerDespesa(index) {
             despesas.splice(index, 1);  
-            atualizarTabela(false);  // Passa false para indicar que não deve exibir alerta
+            atualizarTabela(false); 
         }
 
         function exibirModal(mensagem) {
@@ -136,10 +137,21 @@
         });
 
         function atualizarGrafico() {
-            grafico.data.labels = despesas.map(d => d.descricao);
-            grafico.data.datasets[0].data = despesas.map(d => d.valor);
-            grafico.update();
-        }
+    let totalGanho = salario;
+    let totalGasto = despesas.reduce((acc, d) => acc + d.valor, 0);
+    let sobra = Math.max(totalGanho - totalGasto, 0);
+    
+    let labels = despesas.map(d => d.descricao).concat("Saldo");
+    let data = despesas.map(d => d.valor).concat(sobra);
+    
+    let cores = despesas.map(() => `hsl(${Math.random() * 360}, 70%, 50%)`).concat("green");
+
+    grafico.data.labels = labels;
+    grafico.data.datasets[0].data = data;
+    grafico.data.datasets[0].backgroundColor = cores;
+    grafico.update();
+}
+
 
         document.getElementById("adicionar-btn").addEventListener("click", adicionarDespesa);
     </script>
